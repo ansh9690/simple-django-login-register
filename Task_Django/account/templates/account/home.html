@@ -1,0 +1,75 @@
+{% extends 'account/base.html' %}
+{% block custom_css %}
+body {
+    background: #dedede;
+}
+.bg-dark{
+    background-color: #000 !important;
+    color: #fff;
+    font-size:18px;
+}
+.dropdown:hover>.dropdown-menu {
+  display: block;
+  background-color:#dedede;
+}
+.dropdown>.dropdown-toggle:active {
+    pointer-events: none;
+}
+
+{% endblock custom_css %}
+
+{% block body %}
+<section>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Accounts</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </div>
+        {% if user.is_authenticated %}
+         <div class="navbar-nav ml-auto">
+             <div class="dropdown">
+                 <a class="btn nav-link dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    Hey {{ user.username|title}}
+                  </a>
+                 <ul class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+                     <li><a class="dropdown-item"  href="{% url 'account:logout' %}">Logout</a></li>
+                     <li><a class="dropdown-item" href="{% url 'account:password_change' %}">Change Password</a></li>
+                 </ul>
+            </div>
+          </div>
+         {% else %}
+         <div class="navbar-nav ml-auto">
+             <a class="nav-link" href="{% url 'account:login' %}">Sign in</a>
+             <a class="nav-link" href="{% url 'account:register' %}">Sign up</a>
+         </div>
+        {% endif %}
+        </div>
+      </div>
+    </nav>
+</section>
+<div class="container-fluid text-center" style="margin-top:230px;">
+    <h1 class="display-2 main text-black"><strong><span id="typed"></span></strong></h1>
+</div>
+{% block custom_javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.9/typed.min.js" async defer></script>
+    <script>
+        window.onload = function () {
+            console.log("loaded")
+            var typed = new Typed('#typed', {
+                strings: ["Anshu Prakash", "Django Developer", "Indian Institute of Information Technology Jabalpur"],
+                backSpeed: 30,
+                smartBackspace: true,
+                backDelay: 1200,
+                startDelay: 1000,
+                typeSpeed: 40,
+                loop: true,
+            });
+        };
+    </script>
+{% endblock custom_javascript %}
+{% endblock body %}
